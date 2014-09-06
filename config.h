@@ -2,7 +2,7 @@
 
 /* appearance */
 /* static const char font[]            = "-*-terminus-medium-r-*-*-146-*-*-*-*-*-*-*"; */
-static const char font[]            = "-b&h-lucidatypewriter-bold-r-normal-sans-26-190-100-100-m-159-iso8859-1";
+static const char font[]            = "-*-*-medium-*-normal-sans-20-*-100-100-m-120-iso8859-1";
 static const char normbordercolor[] = "#444444";
 static const char normbgcolor[]     = "#222222";
 static const char normfgcolor[]     = "#bbbbbb";
@@ -68,7 +68,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_p,  setlayout,      {0} },
+	{ MODKEY,                       XK_p,      setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
