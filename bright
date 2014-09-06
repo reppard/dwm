@@ -1,0 +1,46 @@
+#!/bin/bash
+
+state=$1
+
+currentBrightness=$(xrandr --verbose | grep Brightness | sed 's/Brightness://g')
+
+function brightUp
+{
+  if [ $(echo "$currentBrightness < 1.0" | bc ) == 1 ]
+  then
+    newBright=$(echo "$currentBrightness + 0.20" | bc)
+    xrandr --output eDP-1 --brightness $newBright
+    exit 0
+  fi
+}
+
+function brightDown
+{
+  if [ $(echo "$currentBrightness > 0.0" | bc ) == 1 ]
+  then
+    newBright=$(echo "$currentBrightness - 0.20" | bc)
+    xrandr --output eDP-1 --brightness $newBright
+    exit 0
+  fi
+}
+
+if [ -z $state ]
+then
+  echo "Current Brightness: $currentBrightness"
+  echo "Pass in 'up' or 'down' as args to change state."
+  exit 1
+fi
+
+
+if [ $state == "up" ] || [ $state == "down" ]
+then
+  if [ $state == "up" ]
+  then
+    brightUp
+  else
+    brightDown
+  fi
+else
+  echo "up or down should be passed in"
+fi
+
