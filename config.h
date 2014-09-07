@@ -2,26 +2,26 @@
 
 /* appearance */
 /* static const char font[]            = "-*-terminus-medium-r-*-*-146-*-*-*-*-*-*-*"; */
-static const char font[]            = "-*-*-medium-*-normal-sans-20-*-100-100-m-120-iso8859-1";
+static const char font[]            = "-xos4-*-*-r-*-*-24-*-*-*-*-*-*-*";
+/* static const char font[]            = "-*-*-medium-*-normal-sans-20-*-100-100-m-120-iso8859-1"; */
 static const char normbordercolor[] = "#444444";
 static const char normbgcolor[]     = "#222222";
 static const char normfgcolor[]     = "#bbbbbb";
 static const char selbordercolor[]  = "#005577";
 static const char selbgcolor[]      = "#005577";
 static const char selfgcolor[]      = "#eeeeee";
-/* static const unsigned int borderpx  = 1;        #<{(| border pixel of windows |)}># */
-static const unsigned int borderpx  = 3;        /* border pixel of windows */
-static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int snap      = 20;       /* snap pixel */
 static const Bool showbar           = True;     /* False means no bar */
 static const Bool topbar            = True;     /* False means bottom bar */
 
 /* tagging */
-static const char *tags[] = { "term", "hipchat", "3", "4", "5", "6", "7", "8", "firefox" };
+static const char *tags[] = { "term", "browser", "chat", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            True,        -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       False,       -1 },
+	{ "Firefox",  NULL,       NULL,       2,            False,       -1 },
 };
 
 /* layout(s) */
@@ -49,7 +49,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *dmenucmd[]  = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]   = { "lxterminal", NULL };
+static const char *termcmd[]   = { "urxvt", NULL };
 static const char *dimcmd[]    = { "bright", "down", NULL };
 static const char *britecmd[]  = { "bright", "up", NULL };
 
@@ -57,8 +57,8 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_F1,     spawn,           {.v = dimcmd } },
-	{ MODKEY,                       XK_F2,     spawn,           {.v = britecmd } },
+	{ MODKEY,                       XK_F1,     spawn,          {.v = dimcmd } },
+	{ MODKEY,                       XK_F2,     spawn,          {.v = britecmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },

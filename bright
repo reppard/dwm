@@ -1,7 +1,7 @@
 #!/bin/bash
 
 state=$1
-
+adapter=$(xrandr --verbose | grep " connected" | awk {'print $1'})
 currentBrightness=$(xrandr --verbose | grep Brightness | sed 's/Brightness://g')
 
 function brightUp
@@ -9,7 +9,7 @@ function brightUp
   if [ $(echo "$currentBrightness < 1.0" | bc ) == 1 ]
   then
     newBright=$(echo "$currentBrightness + 0.20" | bc)
-    xrandr --output eDP-1 --brightness $newBright
+    xrandr --output $adapter --brightness $newBright
     exit 0
   fi
 }
@@ -19,7 +19,7 @@ function brightDown
   if [ $(echo "$currentBrightness > 0.0" | bc ) == 1 ]
   then
     newBright=$(echo "$currentBrightness - 0.20" | bc)
-    xrandr --output eDP-1 --brightness $newBright
+    xrandr --output $adapter --brightness $newBright
     exit 0
   fi
 }
