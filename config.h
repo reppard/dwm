@@ -1,9 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-/* static const char font[]            = "-*-terminus-medium-r-*-*-146-*-*-*-*-*-*-*"; */
 static const char font[]            = "-xos4-*-*-r-*-*-24-*-*-*-*-*-*-*";
-/* static const char font[]            = "-*-*-medium-*-normal-sans-20-*-100-100-m-120-iso8859-1"; */
 static const char normbordercolor[] = "#444444";
 static const char normbgcolor[]     = "#222222";
 static const char normfgcolor[]     = "#bbbbbb";
@@ -11,12 +9,13 @@ static const char selbordercolor[]  = "#005577";
 static const char selbgcolor[]      = "#005577";
 static const char selfgcolor[]      = "#eeeeee";
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const unsigned int snap      = 20;       /* snap pixel */
+static const unsigned int snap      = 2;       /* snap pixel */
 static const Bool showbar           = True;     /* False means no bar */
 static const Bool topbar            = True;     /* False means bottom bar */
 
 /* tagging */
-static const char *tags[] = { "term", "browser", "chat", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "1: term ", " 2: browser ", " 3: chat ",
+                              " 4: mail ", " 5 ", " 6 ", " 7 "};
 
 static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
