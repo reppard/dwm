@@ -1,5 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
+#include <XF86keysym.h>
+
 /* appearance */
 static const char font[]            = "-xos4-*-*-r-*-*-24-*-*-*-*-*-*-*";
 static const char normbordercolor[] = "#444444";
@@ -9,9 +11,9 @@ static const char selbordercolor[]  = "#005577";
 static const char selbgcolor[]      = "#005577";
 static const char selfgcolor[]      = "#eeeeee";
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const unsigned int snap      = 2;       /* snap pixel */
+static const unsigned int snap      = 32;       /* snap pixel */
 static const Bool showbar           = True;     /* False means no bar */
-static const Bool topbar            = True;     /* False means bottom bar */
+static const Bool topbar            = False;     /* False means bottom bar */
 
 /* tagging */
 static const char *tags[] = { "1: term ", " 2: browser ", " 3: chat ",
@@ -19,14 +21,16 @@ static const char *tags[] = { "1: term ", " 2: browser ", " 3: chat ",
 
 static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            True,        -1 },
-	{ "Firefox",  NULL,       NULL,       2,            False,       -1 },
+	{ "Gimp",     NULL,       NULL,       0,               True,        -1 },
+	{ "HipChat",  NULL,       NULL,       1<<2,            False,       -1 },
+	{ "Minecraft",NULL,       NULL,       1<<4,            False,       -1 },
+	{ "Firefox",  NULL,       NULL,       2,               False,       -1 },
 };
 
 /* layout(s) */
 static const float mfact      = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster      = 1;    /* number of clients in master area */
-static const Bool resizehints = True; /* True means respect size hints in tiled resizals */
+static const Bool resizehints = False; /* True means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -36,7 +40,7 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -48,16 +52,20 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *dmenucmd[]  = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]   = { "urxvt", NULL };
+static const char *termcmd[]   = { "lxterminal", NULL };
 static const char *dimcmd[]    = { "bright", "down", NULL };
 static const char *britecmd[]  = { "bright", "up", NULL };
+static const char *killdwm[]  =  { "killdwm", NULL };
+static const char *raisevolumecmd[]      = {"amixer", "set", "Master", "5%+", NULL};
+static const char *lowervolumecmd[]      = {"amixer", "set", "Master", "5%-", NULL};
+static const char *mutecmd[]             = {"amixer", "set", "Master", "toggle", NULL};
+static const char *keyliteupcmd[]        = {"sudo", "keyboard-backlight", "up", NULL};   /* requires hack to sudoers file.  I dont like this. */
+static const char *keylitedowncmd[]      = {"sudo", "keyboard-backlight", "down", NULL}; /* must find another way */
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
-	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_F1,     spawn,          {.v = dimcmd } },
-	{ MODKEY,                       XK_F2,     spawn,          {.v = britecmd } },
+  { MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -89,6 +97,14 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ControlMask|ShiftMask, XK_q,      spawn,           {.v = killdwm} },
+  {0,               XF86XK_KbdBrightnessUp,   spawn,         {.v = keyliteupcmd}},
+  {0,               XF86XK_KbdBrightnessDown, spawn,         {.v = keylitedowncmd}},
+  {0,               XF86XK_MonBrightnessUp,   spawn,         {.v = britecmd}},
+  {0,               XF86XK_MonBrightnessDown, spawn,         {.v = dimcmd}},
+  {0,               XF86XK_AudioRaiseVolume,  spawn,         {.v = raisevolumecmd}},
+  {0,               XF86XK_AudioLowerVolume,  spawn,         {.v = lowervolumecmd}},
+  {0,               XF86XK_AudioMute,         spawn,         {.v = mutecmd}},
 };
 
 /* button definitions */
